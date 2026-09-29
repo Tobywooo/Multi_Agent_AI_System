@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1100" viewBox="0 0 1400 1100" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>System architecture</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#444441"/>
+    </marker>
+    <style>
+      .ct { font-size: 20px; font-weight: 600; }
+      .cs { font-size: 14px; }
+      .bt { font-size: 17px; font-weight: 600; text-anchor: middle; }
+      .bs { font-size: 14px; text-anchor: middle; }
+      .lbl { font-size: 14px; fill: #444441; }
+      .ln { stroke: #444441; stroke-width: 1.6; fill: none; }
+      .p rect { fill: #EEEDFE; stroke: #534AB7; stroke-width: 1.5; }
+      .p .bt { fill: #3C3489; } .p .bs { fill: #534AB7; }
+      .t rect { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 1.5; }
+      .tw rect { fill: #FFFFFF; stroke: #0F6E56; stroke-width: 1.5; }
+      .t .bt, .tw .bt { fill: #085041; } .t .bs, .tw .bs { fill: #0F6E56; }
+      .g rect { fill: #F1EFE8; stroke: #5F5E5A; stroke-width: 1.5; }
+      .g .bt { fill: #444441; } .g .bs { fill: #5F5E5A; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="1100" fill="#FFFFFF"/>
+
+  <!-- Requester agent -->
+  <rect x="40" y="40" width="1320" height="300" rx="18" fill="#FAF9FF" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text class="ct" x="64" y="76" fill="#3C3489">Requester agent</text>
+  <text class="cs" x="64" y="98" fill="#534AB7">Terminal 2 · python -m requester · rule-based coordinator</text>
+
+  <g class="p"><rect x="80" y="120" width="280" height="70" rx="10"/>
+    <text class="bt" x="220" y="149">User request</text><text class="bs" x="220" y="171">Typed at the Request&gt; prompt</text></g>
+  <g class="p"><rect x="470" y="120" width="280" height="70" rx="10"/>
+    <text class="bt" x="610" y="149">Build task</text><text class="bs" x="610" y="171">Question + allowed categories</text></g>
+  <g class="p"><rect x="860" y="120" width="280" height="70" rx="10"/>
+    <text class="bt" x="1000" y="149">A2A client</text><text class="bs" x="1000" y="171">Submit task, poll for result</text></g>
+
+  <g class="p"><rect x="80" y="240" width="280" height="70" rx="10"/>
+    <text class="bt" x="220" y="269">Verify ticket</text><text class="bs" x="220" y="291">5-digit ID, values match</text></g>
+  <g class="p"><rect x="470" y="240" width="280" height="70" rx="10"/>
+    <text class="bt" x="610" y="269">Playwright</text><text class="bs" x="610" y="291">Fills and submits the form</text></g>
+  <g class="p"><rect x="860" y="240" width="280" height="70" rx="10"/>
+    <text class="bt" x="1000" y="269">Validate answer</text><text class="bs" x="1000" y="291">Category offered by the form?</text></g>
+
+  <line class="ln" x1="360" y1="155" x2="468" y2="155" marker-end="url(#a)"/>
+  <line class="ln" x1="750" y1="155" x2="858" y2="155" marker-end="url(#a)"/>
+  <line class="ln" x1="1000" y1="190" x2="1000" y2="238" marker-end="url(#a)"/>
+  <text class="lbl" x="1012" y="219">result</text>
+  <line class="ln" x1="860" y1="275" x2="752" y2="275" marker-end="url(#a)"/>
+  <line class="ln" x1="470" y1="275" x2="362" y2="275" marker-end="url(#a)"/>
+
+  <!-- Mock support app -->
+  <g class="g"><rect x="40" y="410" width="520" height="132" rx="12"/>
+    <text class="bt" x="300" y="446">Mock support app</text>
+    <text class="bs" x="300" y="472">mock_support_app/ (unchanged)</text>
+    <text class="bs" x="300" y="494">Served on a temporary local port per run</text>
+    <text class="bs" x="300" y="516">Fields: Issue, Category, Resolution Notes</text></g>
+  <line class="ln" x1="520" y1="310" x2="520" y2="408" marker-end="url(#a)"/>
+  <text class="lbl" x="532" y="370">Fills and submits</text>
+  <line class="ln" x1="220" y1="410" x2="220" y2="312" marker-end="url(#a)"/>
+  <text class="lbl" x="232" y="370">Confirmation page</text>
+
+  <!-- Specialist agent -->
+  <rect x="640" y="410" width="560" height="500" rx="18" fill="#F7FCFA" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text class="ct" x="664" y="446" fill="#085041">Specialist agent</text>
+  <text class="cs" x="664" y="468" fill="#0F6E56">Terminal 1 · python -m specialist · FastAPI, port 8001</text>
+
+  <g class="t"><rect x="670" y="490" width="500" height="70" rx="10"/>
+    <text class="bt" x="920" y="519">A2A task server</text>
+    <text class="bs" x="920" y="541">Agent card · task IDs · status history · in-memory store</text></g>
+  <line class="ln" x1="920" y1="560" x2="920" y2="598" marker-end="url(#a)"/>
+  <text class="lbl" x="932" y="584">background thread</text>
+
+  <rect x="670" y="600" width="500" height="285" rx="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+  <text x="690" y="630" font-size="17" font-weight="600" fill="#085041">RAG pipeline</text>
+
+  <g class="tw"><rect x="700" y="648" width="440" height="56" rx="8"/>
+    <text class="bt" x="920" y="672">Vector search + relevance gate</text>
+    <text class="bs" x="920" y="692">FAISS, top 10, drop similarity below 0.2</text></g>
+  <g class="tw"><rect x="700" y="728" width="440" height="56" rx="8"/>
+    <text class="bt" x="920" y="752">Cross-encoder rerank</text>
+    <text class="bs" x="920" y="772">ms-marco-MiniLM-L-6-v2, keep top 4</text></g>
+  <g class="tw"><rect x="700" y="808" width="440" height="56" rx="8"/>
+    <text class="bt" x="920" y="832">Groq LLM</text>
+    <text class="bs" x="920" y="852">gpt-oss-20b, grounded, strict JSON schema</text></g>
+  <line class="ln" x1="920" y1="704" x2="920" y2="726" marker-end="url(#a)"/>
+  <line class="ln" x1="920" y1="784" x2="920" y2="806" marker-end="url(#a)"/>
+
+  <!-- Groq API -->
+  <g class="g"><rect x="1230" y="808" width="130" height="56" rx="8"/>
+    <text class="bt" x="1295" y="832">Groq API</text>
+    <text class="bs" x="1295" y="852">cloud</text></g>
+  <line class="ln" x1="1140" y1="836" x2="1228" y2="836" marker-start="url(#a)" marker-end="url(#a)"/>
+
+  <!-- A2A link (drawn after the Specialist container so its arrowhead stays on top) -->
+  <path class="ln" d="M1140 155 L1260 155 L1260 525 L1172 525" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text class="lbl" x="1248" y="370" text-anchor="end" font-weight="600">HTTP + JSON (A2A)</text>
+  <text class="lbl" x="1248" y="390" text-anchor="end">POST /tasks · GET /tasks/{id}</text>
+
+  <!-- Offline indexing -->
+  <rect x="40" y="965" width="1320" height="100" rx="14" fill="#FAFAF7" stroke="#5F5E5A" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text x="64" y="1010" font-size="17" font-weight="600" fill="#444441">Offline setup</text>
+  <text x="64" y="1032" font-size="14" fill="#5F5E5A">run once</text>
+
+  <g class="g"><rect x="300" y="985" width="240" height="60" rx="10"/>
+    <text class="bt" x="420" y="1010">Knowledge base</text>
+    <text class="bs" x="420" y="1031">knowledge_base/*.md (7 docs)</text></g>
+  <g class="g"><rect x="600" y="985" width="320" height="60" rx="10"/>
+    <text class="bt" x="760" y="1010">rag.ingest</text>
+    <text class="bs" x="760" y="1031">Chunk by section, add headers, embed</text></g>
+  <g class="g"><rect x="980" y="985" width="240" height="60" rx="10"/>
+    <text class="bt" x="1100" y="1010">Vector store</text>
+    <text class="bs" x="1100" y="1031">vector_store/ (FAISS, 34 chunks)</text></g>
+  <line class="ln" x1="540" y1="1015" x2="598" y2="1015" marker-end="url(#a)"/>
+  <line class="ln" x1="920" y1="1015" x2="978" y2="1015" marker-end="url(#a)"/>
+
+  <path class="ln" d="M1100 985 L1100 935 L685 935 L685 676 L698 676" stroke-dasharray="6 5" marker-end="url(#a)"/>
+  <text class="lbl" x="1112" y="956" font-size="13">index loaded at startup</text>
+</svg>
